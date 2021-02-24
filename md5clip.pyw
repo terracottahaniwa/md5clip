@@ -72,6 +72,7 @@ class md5clip(tk.Tk):
     def delete_window(self):
         if self.is_countdown:
             self.clipboard_clear()
+            self.clipboard_append('')
         self.destroy()
 
     def digest(self, text):
