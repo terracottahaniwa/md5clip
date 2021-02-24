@@ -3,6 +3,9 @@ import tkinter as tk
 from tkinter import ttk
 
 
+import resource
+
+
 class md5clip(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -25,6 +28,8 @@ class md5clip(tk.Tk):
         y = (sh - h) / 2
         self.geometry('%dx%d+%d+%d' % (w, h, x, y))
         self.resizable(0,0)
+        icon = resource.icon()
+        self.tk.call('wm', 'iconphoto', self._w, tk.PhotoImage(data=icon))
         self.title(title)
         self.protocol('WM_DELETE_WINDOW', self.delete_window)
 

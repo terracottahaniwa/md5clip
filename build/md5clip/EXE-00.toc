@@ -2,7 +2,7 @@
  False,
  False,
  True,
- 'c:\\users\\user\\miniconda3\\envs\\builder\\lib\\site-packages\\PyInstaller\\bootloader\\images\\icon-windowed.ico',
+ 'md5clip.ico',
  None,
  False,
  False,
@@ -40,7 +40,7 @@
  [],
  False,
  False,
- 1614177104,
+ 1614205755,
  [('runw.exe',
    'c:\\users\\user\\miniconda3\\envs\\builder\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\runw.exe',
    'EXECUTABLE')])
