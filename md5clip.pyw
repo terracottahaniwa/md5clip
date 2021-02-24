@@ -6,7 +6,7 @@ from tkinter import ttk
 class md5clip(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.test()
+        # self.test()
         self.setup()
         self.mainloop()
 
@@ -24,8 +24,8 @@ class md5clip(tk.Tk):
         x = (sw - w) / 2
         y = (sh - h) / 2
         self.geometry('%dx%d+%d+%d' % (w, h, x, y))
-        self.title(title)
         self.resizable(0,0)
+        self.title(title)
         self.protocol('WM_DELETE_WINDOW', self.delete_window)
 
     def config_label(self):
@@ -37,14 +37,14 @@ class md5clip(tk.Tk):
 
     def config_entry(self):
         px, py = 10, 10
-        show = "*"
+        mask = "*"
         self.entry = ttk.Entry(self)
         self.entry.pack(padx=px, pady=py, fill=tk.X)
-        self.entry.config(show=show)
-        self.entry.bind('<Return>', self.entry_Return)
+        self.entry.config(show=mask)
+        self.entry.bind('<Return>', self.entry_return)
         self.entry.focus_set()
 
-    def entry_Return(self, event):
+    def entry_return(self, event):
         timeout = 10
         self.entry.config(state='readonly')
         hash = self.digest(self.entry.get())
