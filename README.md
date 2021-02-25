@@ -11,7 +11,7 @@
   or command on console "Python md5clip.pyw"<br>
 </p>
 
-### screenshot
+### screenshot:
 <p>
   
   ![screenshot1](screenshot/screenshot1.png "screenshot1")
