@@ -8,7 +8,7 @@
 <p>
   clone or download zip from this repo. (and decompress zip)<br>
   execute ./dist/md5clip/md5clip.exe<br>
-  or command on console "Python md5clip.pyw"<br>
+  or command on console "python md5clip.pyw"<br>
 </p>
 
 ### screenshot:
