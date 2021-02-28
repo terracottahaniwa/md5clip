@@ -1,7 +1,18 @@
 # md5clip
 <p>
-  put md5 digest to clipboard.<br>
+  put base64 encoded md5 digest to clipboard.<br>
   clipboard will cleared when after 10sec.<br>
+</p>
+
+<p>
+  code is same as:<br>
+  will be the same as the result of the command:<br>
+  read -s ; echo -n $REPLY | md5sum | awk '{printf $1}' | base64<br>
+</p>
+
+### build
+<p>
+  pyinstaller -w --icon=md5clip.ico md5clip.pyw
 </p>
 
 ### install and usage:
