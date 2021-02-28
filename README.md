@@ -6,7 +6,7 @@
 
 <p>
   code is same as:<br>
-  will be the same as the result of the command:<br>
+  will be the same as the result of the command on linux:<br>
   read -s ; echo -n $REPLY | md5sum | awk '{printf $1}' | base64<br>
 </p>
 
