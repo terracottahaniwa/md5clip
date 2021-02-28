@@ -62,7 +62,7 @@ class md5clip(tk.Tk):
 
     def timer(self):
         wait = 1000
-        text = "hash copied to clipboard. " \
+        text = "code copied to clipboard. " \
                "clipboard will be cleared when after %dsec." % (self.timelimit)
         self.label.config(text=text)
         self.timelimit = self.timelimit - 1
@@ -85,7 +85,7 @@ class md5clip(tk.Tk):
 
     def code(self, text):
         if not isinstance(text, str):
-            raise TypeError("hash() require str.")
+            raise TypeError("code() require str.")
         text = text.encode('utf-8')
         return b64encode(text).decode()
 
