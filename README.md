@@ -1,7 +1,21 @@
 # md5clip
 <p>
-  put md5 digest to clipboard.<br>
+  put base64 encoded md5 digest to clipboard.<br>
   clipboard will cleared when after 10sec.<br>
+</p>
+
+<p>
+  this tool can use for password stretching.<br>
+</p>
+
+<p>
+  will be the same as the result of the command on linux:<br>
+  read -s ; echo -n $REPLY | md5sum | awk '{printf $1}' | base64<br>
+</p>
+
+### build
+<p>
+  pyinstaller -w --icon=md5clip.ico md5clip.pyw
 </p>
 
 ### install and usage:

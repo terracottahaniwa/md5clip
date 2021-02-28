@@ -1,7 +1,7 @@
-import hashlib
 import tkinter as tk
 from tkinter import ttk
-
+from hashlib import md5
+from base64 import b64encode
 
 import resource
 
@@ -9,7 +9,7 @@ import resource
 class md5clip(tk.Tk):
     def __init__(self):
         super().__init__()
-        # self.test()
+        self.test()
         self.setup()
         self.mainloop()
 
@@ -52,16 +52,18 @@ class md5clip(tk.Tk):
     def entry_return(self, event):
         timeout = 10
         self.entry.config(state='readonly')
-        hash = self.digest(self.entry.get())
+        hash = self.hash(self.entry.get())
+        code = self.code(hash)
         self.clipboard_clear()
-        self.clipboard_append(hash)
+        self.clipboard_append(code)
         self.is_countdown = True
         self.timelimit = timeout
         self.timer()
 
     def timer(self):
         wait = 1000
-        text = "hash copied to clipboard. clipboard will be cleared when after %dsec." % (self.timelimit)
+        text = "code copied to clipboard. " \
+               "clipboard will be cleared when after %dsec." % (self.timelimit)
         self.label.config(text=text)
         self.timelimit = self.timelimit - 1
         if self.timelimit < 0:
@@ -75,18 +77,37 @@ class md5clip(tk.Tk):
             self.clipboard_append('')
         self.destroy()
 
-    def digest(self, text):
-        return hashlib.md5(text.encode('utf-8')).hexdigest()
+    def hash(self, text):
+        if not isinstance(text, str):
+            raise TypeError("hash() require str.")
+        text = text.encode('utf-8')
+        return md5(text).hexdigest()
+
+    def code(self, text):
+        if not isinstance(text, str):
+            raise TypeError("code() require str.")
+        text = text.encode('utf-8')
+        return b64encode(text).decode()
 
     def test(self):
-        self.test_digest()
+        self.test_hash()
+        self.test_code()
 
-    def test_digest(self):
+    def test_hash(self):
         validation_text = '123'
         validation_hash = '202cb962ac59075b964b07152d234b70'
-        calculated_hash = self.digest(validation_text)
+        validation_code = 'MjAyY2I5NjJhYzU5MDc1Yjk2NGIwNzE1MmQyMzRiNzA='
+        calculated_hash = self.hash(validation_text)
         if not calculated_hash == validation_hash:
-            raise ValueError("test_digest fail.")
+            raise ValueError("test_hash fail.")
+
+    def test_code(self):
+        validation_text = '123'
+        validation_hash = '202cb962ac59075b964b07152d234b70'
+        validation_code = 'MjAyY2I5NjJhYzU5MDc1Yjk2NGIwNzE1MmQyMzRiNzA='
+        calculated_code = self.code(validation_hash)
+        if not calculated_code == validation_code:
+            raise ValueError("test_code fail.")
 
 
 md5clip()
