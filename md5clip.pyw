@@ -41,10 +41,10 @@ class md5clip(tk.Tk):
 
     def config_label(self):
         px, py = 10, 10
-        text = "set stretching iterates and input plain text:"
+        message = "set stretching iterates and input plain text:"
         self.label = ttk.Label(self)
         self.label.pack(ipadx=px, ipady=py)
-        self.label.config(text=text, anchor=tk.S)
+        self.label.config(text=message, anchor=tk.S)
 
     def config_spinbox(self):
         px, py = 10, 10
@@ -82,10 +82,10 @@ class md5clip(tk.Tk):
 
     def job(self):
         n = int(self.iterates.get())
-        hash = self.entry.get()
+        text = self.entry.get()
         for i in range(n):
-            hash = self.hash(hash)
-        code = self.code(hash)
+            text = self.hash(text)
+        code = self.code(text)
         clipboard.copy(code)
         self.upkeep()
 
@@ -93,18 +93,18 @@ class md5clip(tk.Tk):
         timeout = 10
         self.is_countdown = True
         self.timelimit = timeout
-        self.timer()
+        self.countdown()
 
-    def timer(self):
+    def countdown(self):
         wait = 1000
-        text = "code copied to clipboard. " \
-               "clipboard will be cleared after %dsec." % (self.timelimit)
-        self.label.config(text=text)
+        message = "code copied to clipboard. " \
+                  "clipboard will be cleared after %dsec." % (self.timelimit)
+        self.label.config(text=message)
         self.timelimit = self.timelimit - 1
         if self.timelimit < 0:
             self.delete_window()
         else:
-            self.after(wait, self.timer)
+            self.after(wait, self.countdown)
 
     def delete_window(self):
         if self.is_countdown:
