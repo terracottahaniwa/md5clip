@@ -28,16 +28,23 @@ class md5clip(tk.Tk):
     def config_window(self):
         w, h = 480, 120
         title = "md5clip"
+        geometry = self.center_geometry(w, h)
+        self.geometry(geometry)
+        self.resizable(False, False)
+        self.set_icon()
+        self.title(title)
+        self.protocol('WM_DELETE_WINDOW', self.delete_window)
+
+    def center_geometry(self, w, h):
         sw = self.winfo_screenwidth()
         sh = self.winfo_screenheight()
         x = (sw - w) / 2
         y = (sh - h) / 2
-        self.geometry('%dx%d+%d+%d' % (w, h, x, y))
-        self.resizable(0, 0)
+        return '%dx%d+%d+%d' % (w, h, x, y)
+
+    def set_icon(self):
         icon = resource.icon()
         self.tk.call('wm', 'iconphoto', self._w, tk.PhotoImage(data=icon))
-        self.protocol('WM_DELETE_WINDOW', self.delete_window)
-        self.title(title)
 
     def config_label(self):
         px, py = 10, 10
