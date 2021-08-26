@@ -55,11 +55,15 @@ class md5clip(tk.Tk):
 
     def config_spinbox(self):
         px, py = 10, 10
+        iterate_min = 1
+        iterate_max = 1e6
+        inc = 1e4
         cmd = (self.register(self.key_validation), '%S')
         self.load_iterates()
         self.spinbox = ttk.Spinbox(self,
-                                   from_=1, to=1000000000, increment=10000,
                                    textvariable=self.iterates,
+                                   from_=iterate_min, to=iterate_max,
+                                   increment=inc,
                                    validatecommand=cmd,
                                    validate='key', justify='right')
         self.spinbox.pack(padx=px, pady=py, expand=False)
@@ -120,7 +124,7 @@ class md5clip(tk.Tk):
         self.destroy()
 
     def load_iterates(self):
-        initial_value = 100000
+        initial_value = 1e5
         try:
             with open(self.pickle_filename, 'rb') as f:
                 self.iterates = tk.StringVar(value=pickle.load(f))
