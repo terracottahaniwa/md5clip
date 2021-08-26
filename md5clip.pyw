@@ -28,31 +28,42 @@ class md5clip(tk.Tk):
     def config_window(self):
         w, h = 480, 120
         title = "md5clip"
+        geometry = self.center_geometry(w, h)
+        self.geometry(geometry)
+        self.resizable(False, False)
+        self.set_icon()
+        self.title(title)
+        self.protocol('WM_DELETE_WINDOW', self.delete_window)
+
+    def center_geometry(self, w, h):
         sw = self.winfo_screenwidth()
         sh = self.winfo_screenheight()
         x = (sw - w) / 2
         y = (sh - h) / 2
-        self.geometry('%dx%d+%d+%d' % (w, h, x, y))
-        self.resizable(0, 0)
+        return '%dx%d+%d+%d' % (w, h, x, y)
+
+    def set_icon(self):
         icon = resource.icon()
         self.tk.call('wm', 'iconphoto', self._w, tk.PhotoImage(data=icon))
-        self.protocol('WM_DELETE_WINDOW', self.delete_window)
-        self.title(title)
 
     def config_label(self):
         px, py = 10, 10
-        text = "set stretching iterates and input plain text:"
+        message = "set stretching iterates and input plain text:"
         self.label = ttk.Label(self)
         self.label.pack(ipadx=px, ipady=py)
-        self.label.config(text=text, anchor=tk.S)
+        self.label.config(text=message, anchor=tk.S)
 
     def config_spinbox(self):
         px, py = 10, 10
+        iterate_min = 1
+        iterate_max = 1e6
+        inc = 1e4
         cmd = (self.register(self.key_validation), '%S')
         self.load_iterates()
         self.spinbox = ttk.Spinbox(self,
-                                   from_=1, to=1000000000, increment=10000,
                                    textvariable=self.iterates,
+                                   from_=iterate_min, to=iterate_max,
+                                   increment=inc,
                                    validatecommand=cmd,
                                    validate='key', justify='right')
         self.spinbox.pack(padx=px, pady=py, expand=False)
@@ -82,10 +93,10 @@ class md5clip(tk.Tk):
 
     def job(self):
         n = int(self.iterates.get())
-        hash = self.entry.get()
+        text = self.entry.get()
         for i in range(n):
-            hash = self.hash(hash)
-        code = self.code(hash)
+            text = self.hash(text)
+        code = self.code(text)
         clipboard.copy(code)
         self.upkeep()
 
@@ -93,18 +104,18 @@ class md5clip(tk.Tk):
         timeout = 10
         self.is_countdown = True
         self.timelimit = timeout
-        self.timer()
+        self.countdown()
 
-    def timer(self):
+    def countdown(self):
         wait = 1000
-        text = "code copied to clipboard. " \
-               "clipboard will be cleared after %dsec." % (self.timelimit)
-        self.label.config(text=text)
+        message = "code copied to clipboard. " \
+                  "clipboard will be cleared after %dsec." % (self.timelimit)
+        self.label.config(text=message)
         self.timelimit = self.timelimit - 1
         if self.timelimit < 0:
             self.delete_window()
         else:
-            self.after(wait, self.timer)
+            self.after(wait, self.countdown)
 
     def delete_window(self):
         if self.is_countdown:
@@ -113,7 +124,7 @@ class md5clip(tk.Tk):
         self.destroy()
 
     def load_iterates(self):
-        initial_value = 100000
+        initial_value = 1e5
         try:
             with open(self.pickle_filename, 'rb') as f:
                 self.iterates = tk.StringVar(value=pickle.load(f))
