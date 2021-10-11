@@ -56,7 +56,7 @@ class md5clip(tk.Tk):
     def config_spinbox(self):
         px, py = 10, 10
         iterate_min = 1
-        iterate_max = 1e6
+        iterate_max = 1e9
         inc = 1e4
         cmd = (self.register(self.key_validation), '%S')
         self.load_iterates()
